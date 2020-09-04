@@ -1,0 +1,5 @@
+add_executable(exception_ptr exception_ptr.cpp)
+add_executable(nested_exception nested_exception.cpp)
+add_executable(terminate terminate.cpp)
+add_executable(unexpected unexpected.cpp)
+add_executable(stack stack.cpp)
