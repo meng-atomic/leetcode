@@ -6,6 +6,7 @@
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
+#include <cstdlib>
 
 template<typename C>
 void echo_container(const C& vec) {
