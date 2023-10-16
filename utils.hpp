@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <cstdlib>
+#include <algorithm>
 
 template<typename C>
 void echo_container(const C& vec) {
@@ -53,3 +54,25 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+void heapify(std::vector<int>& datas, int index) {
+    int smallest = index;
+    int left_child_idx = 2 * index + 1;
+    int right_child_index = 2 * index + 2;
+    if (left_child_idx < datas.size() && datas[left_child_idx] < datas[smallest]) {
+        smallest = left_child_idx;
+    }
+    if (right_child_index < datas.size() && datas[right_child_index] < datas[smallest]) {
+        smallest = right_child_index;
+    }
+    if (smallest != index) {
+        std::swap(datas[smallest], datas[index]);
+        heapify(datas, smallest);
+    }
+}
+
+void make_heap(std::vector<int>& datas) {
+    for (int i = 0; i < (datas.size() / 2 - 1); --i) {
+        heapify(datas, i);
+    }
+}
