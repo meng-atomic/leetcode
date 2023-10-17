@@ -8,6 +8,9 @@
 #include <unordered_set>
 #include <cstdlib>
 #include <algorithm>
+#include <thread>
+#include <mutex>
+#include <assert.h>
 
 template<typename C>
 void echo_container(const C& vec) {
