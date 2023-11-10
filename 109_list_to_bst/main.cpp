@@ -86,25 +86,42 @@ TreeNode* buildTree(ListNode* head) {
 	if (head == nullptr) {
 		return nullptr;
 	}
-	ListNode* list_node = head;
-	TreeNode* root = new TreeNode();
-	std::queue<TreeNode*> que;
-	que.push(root);
-	list_node = list_node->next;
-	while (list_node != nullptr) {
-		TreeNode* node = que.front();
-		que.pop();
-		node->left = new TreeNode();
-		que.push(node->left);
-		list_node = list_node->next;
-		if (list_node == nullptr) {
-			break;
-		}
-		node->right = new TreeNode();
-		que.push(node->right);
-		list_node = list_node->next;
-	}
+	TreeNode* root = new TreeNode(head->val);
+  ListNode* curr_list_node = head->next;
+  TreeNode* target_tree_node = root;
+  while (curr_list_node != nullptr) {
+    while (target_tree_node != nullptr) {
+      if (curr_list_node->val > target_tree_node->val) {
+        if (target_tree_node->right == nullptr) {
+          TreeNode* rnode = new TreeNode(curr_list_node->val);
+          target_tree_node->right = rnode;
+          break;
+        } else {
+          target_tree_node = target_tree_node->right;
+        }
+      } else {
+        if (target_tree_node->left == nullptr) {
+          TreeNode* lnode = new TreeNode(curr_list_node->val);
+          target_tree_node->left = lnode;
+          break;
+        }
+        target_tree_node = target_tree_node->left;
+      }
+    }
+    curr_list_node = curr_list_node->next;
+    target_tree_node = root;
+  }
 	return root;
+}
+
+void printTreeByLevel(TreeNode* root, int level, std::map<int, std::vector<std::string>>& level_map) {
+	if (root == nullptr) {
+		level_map[level].push_back(std::string("*"));
+		return;
+	}
+	level_map[level].push_back(std::to_string(root->val));
+	printTreeByLevel(root->left, level + 1, level_map);
+	printTreeByLevel(root->right, level + 1, level_map);
 }
 
 void printTreeByLevel(TreeNode* root) {
@@ -119,21 +136,16 @@ void printTreeByLevel(TreeNode* root) {
 	}
 }
 
-void printTreeByLevel(TreeNode* root, int level, std::map<int, std::vector<std::string>>& level_map) {
-	if (root == nullptr) {
-		level_map[level].push_back(std::string("*"));
-		return;
-	}
-	level_map[level].push_back(std::to_string(root->val));
-	printTreeByLevel(root->left, level + 1, level_map);
-	printTreeByLevel(root->right, level + 1, level_map);
-}
-
 int main(int argc, char** argv) {
-	ListNode* head = new ListNode(0);
-	for (int i = 1; i < 7; ++i) {
-		addNode(head, i);
-	}
+	ListNode* head = new ListNode(5);
+  addNode(head, 8);
+  addNode(head, 2);
+  addNode(head, 1);
+  addNode(head, 9);
+  addNode(head, 7);
+  addNode(head, 3);
+  addNode(head, 4);
+  addNode(head, 6);
 
 	printList(head);
 

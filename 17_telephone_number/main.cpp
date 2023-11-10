@@ -2,8 +2,10 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "../utils.hpp"
 
-void backtrack(std::vector<std::string>& combinations, std::string& combination, std::map<char, std::string> dig_map, const std::string& digits, int index) {
+void backtrack(std::vector<std::string>& combinations, std::string& combination,
+  std::map<char, std::string> dig_map, const std::string& digits, int index) {
     if (index == digits.length()) {
         combinations.push_back(combination);
         return;
@@ -35,6 +37,7 @@ std::vector<std::string> letterCombinations(std::string digits) {
 
 int main(int argc, char** argv) {
 	std::vector<std::string> res = letterCombinations("234");
-	std::cout << "size: " << res.size();
+	std::cout << "size: " << res.size() << std::endl;
+  echo_container(res);
 	return 0;
 }

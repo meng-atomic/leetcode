@@ -8,9 +8,12 @@ int longest_substring(const std::string& str) {
         while (right != str.end()) {
             std::cout << "inspecting " << str.substr(left - str.begin(), right - left) << std::endl;
             auto iter = std::find(left, right, *right);
+            std::cout << "left: " << left - str.begin()
+              << ", right: " << right - str.begin()
+              << ", iter: " << iter - str.begin() << std::endl;
             if (iter < right - 1) {
                 max_size = std::max(max_size, int(right - left));
-                ++left;
+                left = iter + 1;
                 ++right;
                 break;
             }
@@ -33,7 +36,7 @@ int longest_substring(const std::string& str) {
 }
 
 int main(int argc, char** argv) {
-    std::string str = "pwwkew";
+    std::string str = "pwawkew";
     std::cout << longest_substring(str) << std::endl;
     return 0;
 }

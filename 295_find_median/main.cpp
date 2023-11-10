@@ -1,4 +1,5 @@
 #include "../utils.hpp"
+#include <list>
 
 class MedianFinder {
 public:
@@ -52,8 +53,60 @@ private:
     std::vector<int> _right_datas;
 };
 
+class MF {
+public:
+  void addNum(int num) {
+    if (_left_datas.size() > _right_datas.size()) {
+      if (_right_datas.empty()) {
+        _right_datas.push_back(num);
+        return;
+      }
+      if (num < _right_datas.front()) {
+        _right_datas.push_front(num);
+      } else {
+        _right_datas.push_back(num);
+      }
+    } else {
+      if (_left_datas.empty()) {
+        _left_datas.push_back(num);
+        return;
+      }
+      if (num > _left_datas.back()) {
+        _left_datas.push_back(num);
+      } else {
+        _left_datas.push_front(num);
+      }
+    }
+  }
+
+  double findMedian() {
+    if (_left_datas.size() == 0 && _right_datas.size() == 0) {
+      return MAXFLOAT;
+    }
+    if (_left_datas.size() == _right_datas.size()) {
+      return (_left_datas.back() + _right_datas.front()) / 2.0;
+    }
+    if (_left_datas.size() > _right_datas.size()) {
+      return _left_datas.back();
+    }
+    if (_right_datas.size() > _left_datas.size()) {
+      return _right_datas.front();
+    }
+  }
+
+
+  void echo() {
+    echo_container(_left_datas);
+    echo_container(_right_datas);
+  }
+
+private:
+  std::list<int> _left_datas;
+  std::list<int> _right_datas;
+};
+
 int main(int argc, char** argv) {
-    MedianFinder finder;
+    MF finder;
     finder.addNum(1);
     finder.echo();
     std::cout << finder.findMedian() << std::endl;

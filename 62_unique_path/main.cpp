@@ -26,7 +26,14 @@ int unique_path(int m, int n) {
     return f[m - 1][n - 1];
 }
 
+struct Foo {
+  Foo(int a, int b): _a(a), _b(b){}
+  int _a;
+  int _b;
+};
+
 int main(int argc, char** argv) {
+    std::vector<Foo> vec(10, {1, 2});
     std::cout << unique_path(3, 7) << std::endl;
     return 0;
 }
